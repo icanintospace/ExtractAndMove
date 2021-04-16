@@ -20,7 +20,7 @@ for folderName, subfolders, filenames in os.walk(working_path):
     for filename in filenames:
         # if .rar file found, extract using p7zip
         if filename.endswith('.rar'):
-            print('File inside ' + folderName + ': ' + filename)
+            print('Archive inside ' + folderName + ': ' + filename)
 
             # First we create a list of existing files for reference
             files_pre = []
