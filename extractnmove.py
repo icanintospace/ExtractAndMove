@@ -21,10 +21,33 @@ for folderName, subfolders, filenames in os.walk(working_path):
         # if .rar file found, extract using p7zip
         if filename.endswith('.rar'):
             print('File inside ' + folderName + ': ' + filename)
+
+            # First we create a list of existing files for reference
+            files_pre = []
+            for file in os.listdir(folderName):
+                if os.path.isfile(os.path.join(folderName, file)):
+                    files_pre.append(file)
+            print(files_pre)
+            # We combine variable to get the full path
             full_path = folderName + filename
+
+            # Then we extract the .rar file found
             subprocess.call(["7z", "x", "-o" + folderName, full_path])
 
-            # now remove
-
+            # We now create a new list of files for reference to determine the names of the new files
+            files_post = []
+            for file in os.listdir(folderName):
+                if os.path.isfile(os.path.join(folderName, file)):
+                    files_post.append(file)
+            print(files_post)
+            # Next is determining which files are new
+            files_new = list(list(set(files_pre)-set(files_post)) + list(set(files_post)-set(files_pre)))
+            print(files_new)
+            print(full_path)
+            # We move the extracted file into the predetermined directory
+            output_folder = "/home/berk/testing/"
+            for i in files_new:
+                new_file = folderName + i
+                subprocess.call(["mv", new_file, output_folder])
 
     print('')
