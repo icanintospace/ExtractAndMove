@@ -39,11 +39,10 @@ for folderName, subfolders, filenames in os.walk(working_path):
             for file in os.listdir(folderName):
                 if os.path.isfile(os.path.join(folderName, file)):
                     files_post.append(file)
-            print(files_post)
+
             # Next is determining which files are new
             files_new = list(list(set(files_pre)-set(files_post)) + list(set(files_post)-set(files_pre)))
-            print(files_new)
-            print(full_path)
+
             # We move the extracted file into the predetermined directory
             output_folder = "/home/berk/testing/"
             for i in files_new:
