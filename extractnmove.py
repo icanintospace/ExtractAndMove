@@ -1,5 +1,5 @@
 # This script is meant for passing in a folder as an argument, and extracting all rar files within those folders
-# subfolders. Afterwards, we delete the archive files while retaining the extracted file(s).
+# subfolders. Afterwards, we move the extracted files to a predetermined location.
 
 import os
 import subprocess
