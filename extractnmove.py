@@ -3,8 +3,12 @@
 
 import os
 import subprocess
+import argparse
 
-# TODO: get the desired directory path from argument
+parser = argparse.ArgumentParser(description='Extract .rar files in the given folder and its subfolders, and move them '
+                                             'to the specified destination.')
+parser.add_argument('source_path', metavar='SOURCE')
+
 working_path = '/mnt/data/Downloads/Ash.vs.Evil.Dead.S01E01.720p.BluRay.x264-DEMAND/'
 
 # Going through every subfolder and file in working_path
