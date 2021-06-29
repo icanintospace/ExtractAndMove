@@ -5,11 +5,20 @@ import os
 import subprocess
 import argparse
 
+# TODO: Change default output to a configuration file
+default_output = '/home/deschain/PlexLibrary'
+
 parser = argparse.ArgumentParser(description='Extract .rar files in the given folder and its subfolders, and move them '
                                              'to the specified destination.')
-parser.add_argument('source_path', metavar='SOURCE')
+parser.add_argument('s', metavar='source', help='The source folder for archives to extract')
+parser.add_argument('-o', metavar='output', help='Output folder for extracted archives', default=default_output)
+args = parser.parse_args()
 
-working_path = '/mnt/data/Downloads/Ash.vs.Evil.Dead.S01E01.720p.BluRay.x264-DEMAND/'
+if os.path.isdir(args.s):
+    working_path = os.path.abspath(args.s)
+else:
+    print("Please enter a valid path")
+output_path = os.path.normpath(args.o)
 
 # Going through every subfolder and file in working_path
 for folderName, subfolders, filenames in os.walk(working_path):
@@ -33,10 +42,10 @@ for folderName, subfolders, filenames in os.walk(working_path):
                     files_pre.append(file)
             print(files_pre)
             # We combine variable to get the full path
-            full_path = folderName + filename
+            full_path = folderName + '/' + filename
 
             # Then we extract the .rar file found
-            subprocess.call(["7z", "x", "-o" + folderName, full_path])
+            subprocess.call(["7z", "x", full_path])
 
             # We now create a new list of files for reference to determine the names of the new files
             files_post = []
@@ -50,7 +59,7 @@ for folderName, subfolders, filenames in os.walk(working_path):
             # We move the extracted file into the predetermined directory
             output_folder = "/home/berk/testing/"
             for i in files_new:
-                new_file = folderName + i
+                new_file = folderName + '/' + i
                 subprocess.call(["mv", new_file, output_folder])
 
     print('')
